@@ -5,6 +5,9 @@ import { useWallet } from '@/context/WalletContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { BACKEND_API_URL, BACKEND_API_KEY } from '@/lib/constants';
+import { ethers } from 'ethers';
+import { toast } from 'react-hot-toast';
+import { FUEL_DISTRIBUTION_ADDRESS, FUEL_DISTRIBUTION_V2_ABI } from '@/lib/constants';
 
 export function Driver() {
   const { account } = useWallet();
@@ -50,15 +53,47 @@ export function Driver() {
 
   const handleValidate = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    if (!(window as any).ethereum) return alert("Please install MetaMask.");
     
-    // Simulate Blockchain call
-    setTimeout(() => {
-      setLoading(false);
-      alert(`Checkpoint [${location}] validated for ${activeShipment.id}. Kwala will sync with Backend.`);
+    setLoading(true);
+    toast.loading("Broadcasting validation event...", { id: 'validate' });
+    
+    try {
+      const provider = new ethers.BrowserProvider((window as any).ethereum);
+      const signer = await provider.getSigner();
+      const fuelFlow = new ethers.Contract(FUEL_DISTRIBUTION_ADDRESS, FUEL_DISTRIBUTION_V2_ABI, signer);
+
+      // Call contract: validateCheckpoint(manifestId, locationName, recordedVolume)
+      // manifestId is activeShipment.id (which is a stringified uint256 from the blockchain)
+      const tx = await fuelFlow.validateCheckpoint(
+        activeShipment.id,
+        location,
+        BigInt(recordedVolume)
+      );
+
+      toast.loading("Synchronizing with protocol...", { id: 'validate' });
+      await tx.wait();
+
+      toast.success("Checkpoint validated! Syncing with network...", { id: 'validate' });
+      
+      // Cleanup
       setLocation('');
       setRecordedVolume('');
-    }, 1500);
+      
+      // Optional: Re-fetch manifest to show update if Kwala is fast enough
+      // or just wait a bit and refresh
+      setTimeout(() => {
+        // Trigger a re-search to refresh the checkpoint list
+        const mockEvent = { preventDefault: () => {} } as any;
+        handleSearchManifest(mockEvent);
+      }, 2000);
+
+    } catch (error: any) {
+      console.error("Validation failed:", error);
+      toast.error(error.reason || "Transaction failed", { id: 'validate' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!activeShipment) {
