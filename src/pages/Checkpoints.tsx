@@ -1,5 +1,4 @@
-import React from 'react';
-import { MapPin, CheckCircle2, Clock, ShieldCheck, Activity } from 'lucide-react';
+import { MapPin, CheckCircle2, Activity } from 'lucide-react';
 
 const MOCK_CHECKPOINTS = [
   { id: 1, name: 'APAPA DEPOT', location: 'Lagos', status: 'VERIFIED', time: '08:30 AM', volume: '30,938 L', variance: '0.0%' },

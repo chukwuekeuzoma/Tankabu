@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Fuel, CheckCircle2, ShieldAlert, Loader2, MapPin, Activity } from 'lucide-react';
+import { useState } from 'react';
+import { Fuel, ShieldAlert, MapPin, Activity } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 

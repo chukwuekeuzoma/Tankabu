@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
 import { toast } from 'react-hot-toast';
 import { BACKEND_API_URL, BACKEND_API_KEY } from '@/lib/constants';
 
@@ -113,7 +113,7 @@ export function ShipmentProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const addShipment = (data: Omit<Shipment, 'id' | 'status' | 'progress' | 'eta' | 'checkpoints'>) => {
+  const addShipment = (_data: Omit<Shipment, 'id' | 'status' | 'progress' | 'eta' | 'checkpoints'>) => {
     // Just refresh after a short delay to allow backend to process
     setTimeout(fetchShipments, 1500);
   };

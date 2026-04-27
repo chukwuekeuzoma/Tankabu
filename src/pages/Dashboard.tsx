@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useShipments } from '@/context/ShipmentContext';
-import { CheckCircle2, ShieldAlert, Clock, History, MapPin, Activity, Loader2 } from 'lucide-react';
+import { History, Activity, Loader2 } from 'lucide-react';
 
 export function Dashboard() {
   const navigate = useNavigate();

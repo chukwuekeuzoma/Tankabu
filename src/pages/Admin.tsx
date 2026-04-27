@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Settings, ShieldCheck, Loader2, Save, Fuel } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -17,7 +17,7 @@ const PRODUCT_TYPES = [
 ];
 
 export function Admin() {
-  const { account } = useWallet();
+  const { } = useWallet();
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(false);
   const [rates, setRates] = useState<Record<string, string>>({

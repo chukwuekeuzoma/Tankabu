@@ -1,9 +1,8 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { TopNav } from '@/components/layout/TopNav';
 import { SubNav } from '@/components/layout/SubNav';
 
 export function MainLayout() {
-  const location = useLocation();
 
   return (
     <>

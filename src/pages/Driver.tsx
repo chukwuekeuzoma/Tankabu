@@ -155,7 +155,7 @@ export function Driver() {
           <div className="lg:col-span-1 space-y-6">
              <span className="sn-txt" style={{ color: 'var(--blue)', display: 'block' }}>ROUTE_MILESTONES</span>
              <div className="space-y-4">
-               {activeShipment.checkpoints.map((cp: any, idx: number) => (
+               {activeShipment.checkpoints.map((cp: any, _idx: number) => (
                  <div 
                    key={cp.id} 
                    style={{ 

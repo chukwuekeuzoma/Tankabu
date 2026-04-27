@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Fuel, MapPin, Crosshair, User, ShieldCheck, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -109,7 +109,7 @@ export function Dispatcher() {
       if (receipt && receipt.logs) {
         const eventFragment = fuelFlow.interface.getEvent("ManifestCreated");
         if (eventFragment) {
-          const log = receipt.logs.find(l => l.address.toLowerCase() === FUEL_DISTRIBUTION_ADDRESS.toLowerCase());
+          const log = receipt.logs.find((l: any) => l.address.toLowerCase() === FUEL_DISTRIBUTION_ADDRESS.toLowerCase());
           if (log) {
             const decoded = fuelFlow.interface.decodeEventLog(eventFragment, log.data, log.topics);
             manifestId = decoded[0].toString();
