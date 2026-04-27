@@ -1,24 +1,6 @@
 export function ShipmentDetail() {
   return (
-    <>
-      <div style={{ background: 'var(--bg2)', border: '1px solid var(--br)', borderRadius: '12px', padding: '14px 22px', marginBottom: '22px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div className="dash-mark">
-            <svg width="15" height="15" viewBox="0 0 18 18" fill="none">
-              <path d="M2 13L9 4L16 13" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              <rect x="6" y="13" width="6" height="3" rx="1" fill="white" />
-            </svg>
-          </div>
-          <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--tx1)' }}>Tankabu</span>
-          <span style={{ color: 'var(--br2)' }}>|</span>
-          <span style={{ fontSize: '14px', color: 'var(--tx2)' }}>Shipment SHP-2847</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div className="kwala-badge"><div className="kwala-dot"></div>Kwala Mainnet</div>
-          <div className="oa-av">OA</div>
-        </div>
-      </div>
-
+    <div style={{ padding: '0 28px 40px' }}>
       <div className="detail-cols">
         <div>
           <div className="shp-card">
@@ -48,19 +30,13 @@ export function ShipmentDetail() {
               <svg viewBox="0 0 340 150" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%' }}>
                 <path d="M 30 110 Q 70 78 105 72 Q 148 66 180 76 Q 215 86 240 94 Q 268 102 310 108" stroke="#1C2E42" strokeWidth="2" fill="none" strokeLinecap="round" />
                 <path d="M 30 110 Q 70 78 105 72 Q 148 66 180 76" stroke="#3B7BF6" strokeWidth="2" fill="none" strokeLinecap="round" />
-                <path d="M 180 76 Q 215 86 240 94" stroke="#EF4444" strokeWidth="2" fill="none" strokeLinecap="round" strokeDasharray="5 3" />
-                <path d="M 240 94 Q 268 102 310 108" stroke="#1C2E42" strokeWidth="2" fill="none" strokeLinecap="round" />
-                <circle cx="30" cy="110" r="7" fill="#22C55E" stroke="#060D18" strokeWidth="1.5" />
-                <text x="30" y="114" textAnchor="middle" fill="white" fontSize="9" fontFamily="DM Sans">✓</text>
-                <circle cx="105" cy="72" r="7" fill="#22C55E" stroke="#060D18" strokeWidth="1.5" />
-                <text x="105" y="76" textAnchor="middle" fill="white" fontSize="9" fontFamily="DM Sans">✓</text>
-                <circle cx="180" cy="76" r="7" fill="#22C55E" stroke="#060D18" strokeWidth="1.5" />
-                <text x="180" y="80" textAnchor="middle" fill="white" fontSize="9" fontFamily="DM Sans">✓</text>
-                <g>
-                  <rect x="226" y="74" width="28" height="14" rx="3" fill="#F59E0B" />
-                  <text x="240" y="84" textAnchor="middle" fill="#060D18" fontSize="8" fontWeight="700" fontFamily="DM Sans">LND</text>
-                </g>
-                <line x1="240" y1="88" x2="240" y2="90" stroke="#F59E0B" strokeWidth="1.5" />
+                <path d="M 180 76 Q 215 86 240 94" stroke="#EF4444" strokeWidth="2" fill="none" strokeLinecap="round" strokeDasharray="4 2" />
+                <circle cx="30" cy="110" r="8" fill="#22C55E" stroke="#060D18" strokeWidth="1.5" />
+                <text x="30" y="114" textAnchor="middle" fill="white" fontSize="9" fontWeight="bold" fontFamily="DM Sans">✓</text>
+                <circle cx="105" cy="72" r="8" fill="#22C55E" stroke="#060D18" strokeWidth="1.5" />
+                <text x="105" y="76" textAnchor="middle" fill="white" fontSize="9" fontWeight="bold" fontFamily="DM Sans">✓</text>
+                <circle cx="180" cy="76" r="8" fill="#22C55E" stroke="#060D18" strokeWidth="1.5" />
+                <text x="180" y="80" textAnchor="middle" fill="white" fontSize="9" fontWeight="bold" fontFamily="DM Sans">✓</text>
                 <circle cx="240" cy="94" r="8" fill="#EF4444" stroke="#060D18" strokeWidth="1.5" />
                 <text x="240" y="98" textAnchor="middle" fill="white" fontSize="9" fontWeight="bold" fontFamily="DM Sans">!</text>
                 <circle cx="310" cy="108" r="7" fill="none" stroke="#364E68" strokeWidth="1.5" strokeDasharray="3 2" />
@@ -177,6 +153,6 @@ export function ShipmentDetail() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

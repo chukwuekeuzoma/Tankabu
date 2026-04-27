@@ -1,12 +1,17 @@
-
 import { BrowserRouter } from 'react-router-dom'
 import { AppRoutes } from './routes'
+import { WalletProvider } from './context/WalletContext'
+import { ShipmentProvider } from './context/ShipmentContext'
 
 function App() {
   return (
-    <BrowserRouter>
-      <AppRoutes />
-    </BrowserRouter>
+    <WalletProvider>
+      <ShipmentProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </ShipmentProvider>
+    </WalletProvider>
   )
 }
 
