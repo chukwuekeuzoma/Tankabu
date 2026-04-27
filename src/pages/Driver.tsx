@@ -162,13 +162,31 @@ export function Driver() {
                   <label className="ic-lbl flex items-center gap-2 mb-2">
                     <MapPin className="w-3.5 h-3.5 text-blue-500" /> CURRENT_CHECKPOINT_NAME
                   </label>
-                  <Input 
+                  <select 
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
-                    placeholder="Select checkpoint to validate"
-                    style={{ background: 'var(--bg)', height: '52px', fontSize: '15px', fontWeight: 600 }}
+                    style={{ 
+                      background: 'var(--bg)', 
+                      height: '52px', 
+                      fontSize: '15px', 
+                      fontWeight: 600, 
+                      width: '100%', 
+                      borderRadius: 'calc(var(--radius) - 2px)', 
+                      border: '1px solid var(--br)', 
+                      color: 'var(--tx1)', 
+                      padding: '0 16px',
+                      appearance: 'none',
+                      cursor: 'pointer'
+                    }}
                     required
-                  />
+                  >
+                    <option value="" disabled>Select checkpoint to validate</option>
+                    {activeShipment.checkpoints.map((cp: any) => (
+                      <option key={cp.id} value={cp.name} disabled={cp.status === 'VERIFIED'}>
+                        {cp.name} {cp.status === 'VERIFIED' ? '(Already Verified)' : ''}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div className="ic-group">
