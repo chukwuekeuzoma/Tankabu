@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { useWallet } from '@/context/WalletContext';
 import { useShipments } from '@/context/ShipmentContext';
 import { ethers } from 'ethers';
+import { toast } from 'react-hot-toast';
 import { 
   FUEL_DISTRIBUTION_ADDRESS, 
   MOCK_STABLECOIN_ADDRESS, 
@@ -86,10 +87,12 @@ export function Dispatcher() {
       const totalPayment = volumeNum * priceWei;
 
       // Approval
+      toast.loading("Approving USDC payment...", { id: 'dispatch' });
       const approveTx = await stablecoin.approve(FUEL_DISTRIBUTION_ADDRESS, totalPayment);
       await approveTx.wait();
 
       // Create Manifest (V2 Signature)
+      toast.loading("Initializing Dispatch Protocol...", { id: 'dispatch' });
       const productTypeBytes = ethers.id(productType);
       const createTx = await fuelFlow.createManifest(
         productTypeBytes,
@@ -145,11 +148,12 @@ export function Dispatcher() {
         driver
       });
       
+      toast.success("Dispatch Protocol Executed Successfully!", { id: 'dispatch' });
       setLoading(false);
       navigate('/dashboard');
     } catch (error: any) {
       console.error(error);
-      alert(`Error: ${error.reason || error.message}`);
+      toast.error(`Protocol Failed: ${error.reason || error.message}`, { id: 'dispatch' });
       setLoading(false);
     }
   };
@@ -233,6 +237,28 @@ export function Dispatcher() {
                     />
                     {fetchingRate && <Loader2 className="absolute right-3 top-3 w-4 h-4 animate-spin text-blue-500" />}
                   </div>
+                </div>
+              </div>
+
+              {/* Total Calculation Display */}
+              <div style={{ 
+                background: 'rgba(59, 123, 246, 0.03)', 
+                border: '1px solid rgba(59, 123, 246, 0.1)', 
+                borderRadius: '12px', 
+                padding: '20px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}>
+                <div>
+                  <span style={{ fontSize: '10px', fontWeight: 700, color: 'var(--tx3)', display: 'block', marginBottom: '4px', letterSpacing: '0.05em' }}>TOTAL_ESTIMATED_ESCROW</span>
+                  <span style={{ fontSize: '24px', fontWeight: 800, color: 'var(--tx1)', letterSpacing: '-0.02em' }}>
+                    {fetchingRate ? '---' : `${((parseFloat(volume) || 0) * parseFloat(pricePerLiter)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USDC`}
+                  </span>
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <span style={{ fontSize: '10px', color: 'var(--tx3)', display: 'block' }}>FEE_ESTIMATE</span>
+                  <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--green)' }}>0.00% FREE</span>
                 </div>
               </div>
             </div>

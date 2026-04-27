@@ -1,12 +1,41 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useShipments } from '@/context/ShipmentContext';
-import { CheckCircle2, ShieldAlert, Clock, History, MapPin, Activity } from 'lucide-react';
+import { CheckCircle2, ShieldAlert, Clock, History, MapPin, Activity, Loader2 } from 'lucide-react';
 
 export function Dashboard() {
   const navigate = useNavigate();
-  const { shipments, selectedShipment, selectShipment } = useShipments();
+  const { shipments, selectedShipment, selectShipment, loading, refreshShipments } = useShipments();
   const [selectedCheckpoint, setSelectedCheckpoint] = useState<any>(null);
+
+  if (loading && shipments.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+        <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+        <span className="sn-txt" style={{ fontSize: '12px', opacity: 0.6 }}>FETCHING_LIVE_FLEET_DATA...</span>
+      </div>
+    );
+  }
+
+  if (shipments.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 border-2 border-dashed border-slate-800 rounded-2xl">
+        <div className="bg-slate-800/50 p-4 rounded-full">
+          <History className="w-8 h-8 text-slate-500" />
+        </div>
+        <div className="text-center">
+          <span className="fleet-title" style={{ display: 'block', marginBottom: '8px' }}>No Active Shipments</span>
+          <span className="sn-txt" style={{ fontSize: '11px', opacity: 0.6 }}>Initialize a new dispatch protocol to begin tracking.</span>
+        </div>
+        <button 
+          onClick={() => navigate('/dispatcher')}
+          className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg text-xs font-bold hover:bg-blue-600 transition-colors"
+        >
+          OPEN_DISPATCHER
+        </button>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -25,9 +54,19 @@ export function Dashboard() {
         <div className="dash-cols">
           {/* Fleet List */}
           <div className="fleet-card">
-            <div className="fleet-hd">
-              <span className="fleet-title">Active Fleet</span>
-              <span className="fleet-count">{shipments.length} trucks active</span>
+            <div className="fleet-hd flex items-center justify-between">
+              <div>
+                <span className="fleet-title">Active Fleet</span>
+                <span className="fleet-count">{shipments.length} trucks active</span>
+              </div>
+              <button 
+                onClick={() => refreshShipments()} 
+                disabled={loading}
+                className="p-2 hover:bg-slate-800 rounded-lg transition-colors text-slate-400 hover:text-blue-500 disabled:opacity-50"
+                title="Refresh Live Data"
+              >
+                <Activity className={`w-4 h-4 ${loading ? 'animate-spin text-blue-500' : ''}`} />
+              </button>
             </div>
             
             {shipments.map(s => (

@@ -17,6 +17,7 @@ export function TopNav() {
 
   if (account) {
     tabs.push({ name: 'Dispatcher', path: '/dispatcher' });
+    tabs.push({ name: 'Admin', path: '/admin' });
     tabs.push({ name: 'Driver', path: '/driver' });
     tabs.push({ name: 'Checkpoints', path: '/checkpoints' });
     tabs.push({ name: 'Station', path: '/station' });
