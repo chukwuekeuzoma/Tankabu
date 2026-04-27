@@ -4,6 +4,7 @@ import { useShipments } from '@/context/ShipmentContext';
 import { useWallet } from '@/context/WalletContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { BACKEND_API_URL, BACKEND_API_KEY } from '@/lib/constants';
 
 export function Driver() {
   const { account } = useWallet();
@@ -14,11 +15,34 @@ export function Driver() {
   const [recordedVolume, setRecordedVolume] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSearchManifest = (e: React.FormEvent) => {
+  const handleSearchManifest = async (e: React.FormEvent) => {
     e.preventDefault();
     const found = shipments.find(s => s.id === manifestInput || s.id.includes(manifestInput));
     if (found) {
-      setActiveShipment(found);
+      setLoading(true);
+      try {
+        const response = await fetch(`${BACKEND_API_URL}/api/checkpoints?shipmentId=${found.id}`, {
+          headers: { 'x-api-key': BACKEND_API_KEY }
+        });
+        const checkpointData = await response.json();
+        
+        const formattedCheckpoints = checkpointData.map((cp: any) => ({
+          id: cp.id,
+          name: cp.name,
+          location: cp.location,
+          status: cp.status,
+          time: new Date(cp.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          volume: cp.volume_recorded ? `${cp.volume_recorded} L` : '---',
+          variance: cp.variance ? `${cp.variance}%` : '---'
+        }));
+
+        setActiveShipment({ ...found, checkpoints: formattedCheckpoints });
+      } catch (error) {
+        console.error("Failed to fetch checkpoints", error);
+        setActiveShipment(found);
+      } finally {
+        setLoading(false);
+      }
     } else {
       alert("Manifest ID not found or not authorized for this session.");
     }
