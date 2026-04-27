@@ -118,13 +118,14 @@ export function Dashboard() {
 
                 {/* Checkpoint Markers */}
                 {selectedShipment?.checkpoints.map((cp, idx) => {
-                  const coords = [
+                  const coordsList = [
                     { x: 68, y: 118 },
                     { x: 200, y: 76 },
                     { x: 336, y: 82 },
                     { x: 456, y: 102 },
                     { x: 590, y: 116 }
-                  ][idx];
+                  ];
+                  const coords = coordsList[idx % coordsList.length];
                   
                   return (
                     <g key={cp.id} onClick={() => setSelectedCheckpoint(cp)} style={{ cursor: 'pointer' }}>
