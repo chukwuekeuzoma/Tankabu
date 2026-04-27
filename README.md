@@ -1,73 +1,98 @@
-# React + TypeScript + Vite
+# Tankabu — Blockchain Fuel Logistics Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Tankabu** is a decentralized fuel logistics platform that tracks fuel shipments in real-time, detects volume anomalies at checkpoints, and enforces delivery integrity through on-chain smart contracts.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Overview
 
-## React Compiler
+The fuel distribution industry suffers from systemic losses due to diversion, adulteration, and measurement fraud. Tankabu addresses this by combining GPS-based shipment tracking with a transparent, immutable audit trail on the blockchain.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Every checkpoint scan is recorded on-chain. When a volume anomaly is detected — a discrepancy between the expected and recorded volume — a smart contract fires automatically, logging the incident and alerting operations.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- 🚛 **Live Fleet Dashboard** — Monitor all active shipments and their route progress in real-time.
+- 📍 **Checkpoint Verification** — Scan and verify fuel volume at each delivery checkpoint.
+- ⚠️ **Anomaly Detection** — Automatically flags volume discrepancies with on-chain evidence.
+- 🔗 **Smart Contract Integration** — Incidents are immutably logged on-chain via auto-fired contracts.
+- 🦊 **MetaMask Wallet Connect** — Role-based access gated behind wallet authentication.
+- 🗺️ **Route Map Visualization** — SVG-based live route map with interactive checkpoint markers.
+- 📋 **Multi-Role Interfaces** — Dedicated views for Admin, Driver, Dispatcher, Checkpoint Officer, and Station Manager.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React 19 + TypeScript |
+| Routing | React Router v7 |
+| Build | Vite |
+| Styling | Tailwind CSS + Vanilla CSS |
+| Web3 | MetaMask / Ethers.js |
+| Package Manager | pnpm |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js ≥ 18
+- pnpm ≥ 9
+
+### Install
+
+```bash
+pnpm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm dev
 ```
+
+### Build
+
+```bash
+pnpm build
+```
+
+### Preview Production Build
+
+```bash
+pnpm preview
+```
+
+---
+
+## Environment Variables
+
+Copy `.env.example` to `.env` and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+---
+
+## Project Structure
+
+```
+src/
+├── components/       # Shared UI components (TopNav, layout, etc.)
+├── context/          # React context providers (Shipments, Wallet)
+├── layouts/          # Page layout wrappers
+├── pages/            # Route-level page components
+└── main.tsx          # Application entry point
+```
+
+---
+
+## License
+
+MIT © Tankabu
