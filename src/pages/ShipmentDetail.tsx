@@ -1,6 +1,6 @@
 export function ShipmentDetail() {
   return (
-    <div style={{ padding: '0 28px 40px' }}>
+    <div className="pb-10 md:px-7">
       <div className="detail-cols">
         <div>
           <div className="shp-card">

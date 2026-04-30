@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import { Activity, X, ChevronDown, Wallet } from 'lucide-react';
+import { Activity, X, ChevronDown, Wallet, Menu } from 'lucide-react';
 import { useWallet } from '@/context/WalletContext';
 
 export function TopNav() {
@@ -8,6 +8,7 @@ export function TopNav() {
   const location = useLocation();
   const { account, network, connect, disconnect } = useWallet();
   const [showModal, setShowModal] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
   
@@ -32,17 +33,17 @@ export function TopNav() {
 
   return (
     <>
-      <nav className="topnav" style={{ height: '88px', borderBottom: '1px solid var(--br)', padding: '0 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200, background: 'var(--bg)' }}>
+      <nav className="topnav w-full bg-(--bg) border-b border-(--br) flex items-center justify-between fixed top-0 left-0 right-0 z-200 px-4 md:px-10 h-[88px] gap-2 md:gap-4">
         {/* Brand */}
-        <div className="tn-brand" style={{ margin: 0, flex: 'none', display: 'flex', alignItems: 'center' }}>
-          <div className="tn-mark" style={{ background: 'var(--blue)', width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="tn-brand flex items-center shrink-0 m-0">
+          <div className="tn-mark bg-(--blue) w-8 h-8 rounded-lg flex items-center justify-center">
             <Activity className="w-4 h-4 text-white" />
           </div>
-          <span className="tn-name" style={{ fontSize: '18px', fontWeight: 700, letterSpacing: '-0.02em', marginLeft: '12px' }}>Tankabu</span>
+          <span className="tn-name text-[18px] font-bold tracking-tight ml-3">Tankabu</span>
         </div>
 
-        {/* Navigation Pills */}
-        <div className="tn-pills" style={{ background: 'var(--bg3)', borderRadius: '20px', padding: '5px', display: 'flex', gap: '4px', margin: '0 auto', flex: 'none' }}>
+        {/* Navigation Pills - Desktop */}
+        <div className="tn-pills hidden! md:flex! bg-(--bg3) rounded-[20px] p-[5px] gap-1 mx-auto shrink-0 max-w-full">
           {tabs.map((tab) => {
             const active = isActive(tab.path) || (tab.path !== '/' && location.pathname.startsWith(tab.path));
             return (
@@ -70,8 +71,9 @@ export function TopNav() {
           })}
         </div>
 
-        {/* Connect / Connected State */}
-        <div className="flex items-center gap-4" style={{ flex: 'none', minWidth: '240px', justifyContent: 'flex-end' }}>
+        <div className="flex items-center justify-end flex-1 md:flex-none gap-3">
+          {/* Connect / Connected State */}
+          <div className="flex items-center gap-4 shrink-0">
           {account ? (
             <div className="flex items-center" style={{ 
               background: 'var(--bg2)', 
@@ -127,8 +129,37 @@ export function TopNav() {
               Connect Wallet
             </button>
           )}
+          </div>
+          
+          {/* Hamburger Menu Toggle (Mobile) */}
+          <button 
+            className="md:hidden flex items-center justify-center p-2 text-(--tx2) hover:text-(--tx1) bg-(--bg3) rounded-[12px] border border-(--br)"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
         </div>
       </nav>
+
+      {/* Mobile Menu Dropdown */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden fixed top-[88px] left-0 right-0 bg-(--bg) border-b border-(--br) z-195 p-4 flex flex-col gap-2 shadow-2xl overflow-y-auto max-h-[calc(100vh-88px)]">
+          {tabs.map((tab) => {
+            const active = isActive(tab.path) || (tab.path !== '/' && location.pathname.startsWith(tab.path));
+            return (
+              <button
+                key={tab.path}
+                onClick={() => { navigate(tab.path); setIsMobileMenuOpen(false); }}
+                className={`w-full text-left px-4 py-3.5 rounded-xl font-semibold text-[13px] transition-all flex items-center ${
+                  active ? 'bg-(--blue) text-white' : 'bg-(--bg3) text-(--tx2) border border-(--br)'
+                }`}
+              >
+                {tab.name}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {showModal && (
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, backdropFilter: 'blur(10px)' }} onClick={() => setShowModal(false)}>

@@ -19,7 +19,7 @@ export function Station() {
   };
 
   return (
-    <div className="dash-cols" style={{ padding: '22px 28px' }}>
+    <div className="dash-cols pb-10 md:p-7">
       <div className="fleet-card" style={{ gridColumn: 'span 12' }}>
         <div className="fleet-hd" style={{ borderBottom: '1px solid var(--br)', paddingBottom: '16px', marginBottom: '24px' }}>
           <span className="fleet-title flex items-center gap-2">

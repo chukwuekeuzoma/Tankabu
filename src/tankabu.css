@@ -332,3 +332,109 @@ input,select,textarea { font-family:var(--font); }
 /* LND marker animation */
 .lnd-marker { animation:floatY 2.5s ease-in-out infinite; }
 @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+
+/* --- Media Queries for Mobile Responsiveness --- */
+@media (max-width: 1024px) {
+  .dash-cols, .detail-cols, .inv-contract-card {
+    grid-template-columns: 1fr;
+  }
+  .screen {
+    padding: 24px 20px 80px;
+  }
+  .subnav {
+    padding: 0 20px !important;
+  }
+  .topnav {
+    padding: 0 20px !important;
+  }
+  .dash-inner, .signin-wrap, .alert-fires-wrap {
+    padding: 24px 20px 48px;
+  }
+  .ck-metrics {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --top: 130px; /* Adjusting top height for wrapped navigation */
+  }
+
+  .topnav {
+    height: auto !important;
+    min-height: 88px;
+    padding: 12px 16px !important;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .tn-brand {
+    margin-right: auto;
+  }
+
+
+
+  /* Wrap layout adjustment */
+  .wrap {
+    top: calc(var(--top) + var(--sub)) !important;
+  }
+
+  .signin-card {
+    width: 100%;
+    padding: 24px;
+  }
+  .driver-id-row {
+    grid-template-columns: 1fr;
+  }
+  .dash-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 20px;
+  }
+  .dash-header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .alert-banner {
+    padding: 12px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .ab-time {
+    margin-left: 20px;
+  }
+  .fi-row1 {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .fi-eta {
+    text-align: left;
+  }
+  .shp-meta-grid {
+    grid-template-columns: 1fr;
+  }
+  .ck-head {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .af-headline {
+    font-size: 32px;
+  }
+  .af-sub {
+    font-size: 18px;
+  }
+  .esc-option {
+    flex-direction: column;
+  }
+  .audit-table, .sc-body, .conf-tx-box {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .dash-header-right {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
